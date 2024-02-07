@@ -5,19 +5,42 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <div id="wrapper">
+      <nav class="navbar is-dark">
+        <div class="navbar-brand">
+          <router-link to="/" class="navbar-item"><strong>Djackets</strong></router-link>
+          <a class="'navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-meny">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <div class="navbar-menu" id="navbar-menu">
+          <div class="navbar-end">
+            <router-link to="/summer" class="navbar-item">Summer</router-link>
+            <router-link to="/winter" class="navbar-item">winter</router-link>
+          </div>
+          <div class="navbar-item">
+            <div class="buttons">
+              <router-link to="/log-in" class="button is-light">Log in</router-link>
+              <router-link to="/cart" class="button is-success">
+              <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+              <span>Cart</span>
+              </router-link>
+            </div>
+          </div>
+            
+        </div>
       </nav>
+      <section class="section">
+        <router-veiw/>
+      </section>
+      <footer class="footer">
+        <p class="has-text-contered">Copyright (c) 2024</p>
+      </footer>
     </div>
   </header>
-
-  <RouterView />
 </template>
 
 <style scoped>
