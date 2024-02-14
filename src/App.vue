@@ -39,7 +39,7 @@ const showMobaleMenu = ref (false)
     </nav>
   </div>
   <section class="section">
-    <HomeView/>
+    <router-view/>
   </section>
 
   <footer class="footer">
