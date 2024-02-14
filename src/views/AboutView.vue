@@ -1,6 +1,8 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1>About page</h1>
+    <h2>Credit :</h2>
+    <p>By <strong>RAMES</strong> Quentin web dev. Whis vuejs and django</p>
   </div>
 </template>
 
