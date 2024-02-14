@@ -1,24 +1,15 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
 
 import { onMounted, ref } from 'vue'
-import axios from 'axios'
+
+
+import { api } from '/src/rest-api/http-api'
 
 let latestProducts = ref('')
 
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/my_ecom',
-  headers: {
-    //common['Authorization']: 'AUTH_TOKEN',
-  },
-  //headers.common['Authorization'] = AUTH_TOKEN;
-  //defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-  timeout: 2500,
-})
-
 
 onMounted( async () => {
-  const response = await api.get('http://127.0.0.1:8000/my_ecom/latest-products-list/?format=json')
+  const response = await api.get('/latest-products-list/?format=json')
   latestProducts.value = response.data
   console.log(latestProducts.value[0].name)
 })
@@ -59,4 +50,4 @@ onMounted( async () => {
 
     </section>
   </div>
-</template>
+</template>../http-api
