@@ -2,6 +2,8 @@
 import TheWelcome from '../components/TheWelcome.vue'
 
 import { onMounted, ref } from 'vue'
+import {useRoute} from 'vue-router'
+
 import axios from 'axios'
 
 let product = ref('')
@@ -10,13 +12,12 @@ const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/my_ecom'
 });
 
-/*
+
 onMounted( async () => {
-  const response = await api.get('/latest-products-list/?format=json')
-  product.value = response.data
-  console.log(product.value[0].name)
+    const response = await api.get('/products' + useRoute().path)
+    product.value = response.data
 })
-*/
+
 </script>
 
 <template>
@@ -24,7 +25,7 @@ onMounted( async () => {
         <div class="columns is-multiline">
             <div class="column is-9">
                 <figure class="image mb-6">
-                    <img v:src="product.get_image">
+                    <img :src="product.get_image">
                 </figure>
 
                 <h1 class="title">{{ product.name }}</h1>
@@ -44,7 +45,7 @@ onMounted( async () => {
             </div>
             
             <div class="control">
-                <a class="button is-dark">Add to cart/a
+                <a class="button is-dark">Add to cart</a>
             </div>
         </div>    
     </div>
