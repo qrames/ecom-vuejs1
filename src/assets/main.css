@@ -1,4 +1,5 @@
 @import './base.css';
+@import './loading.css';
 
 main {
   max-width: 1280px;
