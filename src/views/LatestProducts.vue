@@ -1,25 +1,18 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 
-import { api } from '/src/rest-api/http-api'
+import { apiRest } from '/src/rest-api/http-api'
 
 let latestProducts = ref('')
 
-
 onMounted( async () => {
-  const response = await api.get('/latest-products-list/?format=json')
+  const response = await apiRest.get('/latest-products-list/?format=json')
   latestProducts.value = response.data
-  console.log(latestProducts.value[0].name)
 })
-
 </script>
 
 <template>
-<div class="columns is-multiline">
-    <div class="column is-12">
-        <h2 class="is-size-2 has-text-centered">Latest products</h2>
-    </div>
-
+<div class="columns is-multiline main">
     <div
     class="column is-3"
     v-for="product in latestProducts"
@@ -31,7 +24,31 @@ onMounted( async () => {
             <h3>{{ product.name }}</h3>
             <p>{{ product.price }}</p>
             <p>{{ product.description }}</p>
+            <router-link :to="product.get_absolute_url" class="fancy-btn" >
+                detail
+            </router-link>
         </div>
     </div>
 </div>
 </template>
+
+<style>
+.main {
+    height: 100%;
+}
+.main div{
+    height: 100%;
+
+}
+
+.fancy-btn {
+  color: #fff;
+  background: linear-gradient(315deg, #42d342 25%, #71ff64);
+  border: none;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+</style>
