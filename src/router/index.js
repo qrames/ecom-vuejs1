@@ -8,7 +8,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      meta: { transition: 'slide-left' }
     },
     {
       path: '/about',
@@ -21,7 +22,8 @@ const router = createRouter({
     {
       path: '/:category_slug/:product_slug',
       name: 'ProductDetail',
-      component: () => import('../views/ProductView.vue')
+      component: () => import('../views/ProductView.vue'),
+      meta: { transition: 'slide-right' }
     },
   ]
 })
