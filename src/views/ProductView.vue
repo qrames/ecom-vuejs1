@@ -1,27 +1,50 @@
 <script setup>
 import TheWelcome from '../components/TheWelcome.vue'
 
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
 import {useRoute} from 'vue-router'
+import { apiRest } from '/src/rest-api/http-api'
 
-import axios from 'axios'
 
 let product = ref('')
-
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/my_ecom'
-});
-
+const get_is_ok = reactive({ data_response: 'loading' })
 
 onMounted( async () => {
-    const response = await api.get('/products' + useRoute().path)
-    product.value = response.data
+
+    try {
+        const response = await apiRest.get('/products' + useRoute().path)
+        product.value = response.data
+
+    } catch (err) {
+        console.error("Error response:");
+        console.error(err.response.data);    // ***
+        console.error(err.response.status);  // ***
+        console.log(err.response.status)
+        console.error(err.response.headers); // ***
+    } finally {
+
+        if (product.value != "") {
+            get_is_ok.data_response = true
+        }       
+        else {
+            get_is_ok.data_response = false
+        }
+
+    }
+
 })
+
+
 
 </script>
 
 <template>
-    <div class="page-product">
+    <div class="looping-rhombuses-spinner" v-if="get_is_ok.data_response == 'loading'">
+        <div class="rhombus"></div>
+        <div class="rhombus"></div>
+        <div class="rhombus"></div>
+    </div>
+    <div class="page-product" v-else-if="get_is_ok.data_response === true">
         <div class="columns is-multiline">
             <div class="column is-9">
                 <figure class="image mb-6">
@@ -49,8 +72,17 @@ onMounted( async () => {
             </div>
         </div>    
     </div>
-
+    <div class="page-404" v-else>
+        <h1>404</h1>
+        <p>Aïl ! Aïl ! Aïl !</p>
+        <p><strong>On trouve la l'article ...</strong></p>
+    </div>
 </template>
 
-    
+<style>
+.page-404 {
+    text-align: center;
+    font-size: 2em;
+}
+</style>
     I
