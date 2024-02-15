@@ -7,7 +7,7 @@ import latestProducts from './LatestProducts.vue';
 
 <template>
   <div class="home">
-    <section class="hero is-medium is-dark mb-6">
+    <article class="hero is-medium is-dark mb-6">
       <div class="hero-body has-text-centered">
         <p class="title mb-6">
         Welcome to Djacket
@@ -16,9 +16,9 @@ import latestProducts from './LatestProducts.vue';
         The best jacket store online
         </p>
       </div>
-
+    </article>
+    <article>
       <latestProducts/>
-
-    </section>
+    </article>
   </div>
 </template>
