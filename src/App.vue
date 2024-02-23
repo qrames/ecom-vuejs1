@@ -1,10 +1,8 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import TheNavigation from './components/TheNavigation.vue';
 import 'bulma/css/bulma.min.css'
 import { ref } from 'vue';
-import HomeView from './views/HomeView.vue';
 
 const showMobaleMenu = ref (false)
 
