@@ -1,5 +1,4 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
 
 import { onMounted, ref, reactive } from 'vue'
 import {useRoute} from 'vue-router'
@@ -14,7 +13,6 @@ onMounted( async () => {
     try {
         const response = await apiRest.get('/products' + useRoute().path)
         product.value = response.data
-
     } catch (err) {
         console.error("Error response:");
         console.error(err.response.data);    // ***
