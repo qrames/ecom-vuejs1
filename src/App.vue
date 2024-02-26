@@ -2,9 +2,17 @@
 import { RouterLink, RouterView } from 'vue-router'
 import TheNavigation from './components/TheNavigation.vue';
 import 'bulma/css/bulma.min.css'
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+
+import {initStoreApp} from './store-app'
+
 
 const showMobaleMenu = ref (false)
+
+onMounted( () => {
+  initStoreApp()
+})
+  
 
 </script>
 
