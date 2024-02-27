@@ -8,18 +8,22 @@ export const useCartStore = defineStore('cart', () => {
   const isLoading = ref(false)
 
   function $reset() {
-    cart.value = []
+    cart.value = ref([])
   }
 
+
   function initCart(){
-    if(localStorage.getItem('cart')) {
-      if (JSON.parse(localStorage.getItem('cart')).length > 0) {
-        cart = JSON.parse(localStorage.getItem('cart'))
-      } else {
-        localStorage.setItem('cart', JSON.stringify(cart))
-      }
-    }
-    else localStorage.setItem('cart', JSON.stringify(cart))
+    const local = localStorage.getItem('cart')
+    if(local) {
+      if (JSON.parse(local)._value.length > 0) {
+        console.log(JSON.parse(local)._value)
+        cart.value.push(JSON.parse(local)._value[0])
+      } else setLocalStorageCart()
+    } else setLocalStorageCart()
+  }
+
+  function setLocalStorageCart(){
+    localStorage.setItem('cart', JSON.stringify(cart))
   }
 
 
@@ -27,30 +31,64 @@ export const useCartStore = defineStore('cart', () => {
 
     // itemInCart is a array
     // the first element itemInCart[0] is a proxy
-    const itemInCart = cart.value.filter(i => i.id === item.id)
-
-    if(itemInCart.length) {
-      console.log(itemInCart[0].quantity++)
-      console.log(item.quantity)
-      itemInCart[0].quantity = parseInt(item.quantity) + parseInt(itemInCart[0].quantity)
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaahhhh")
-
+    cleanCart()
+  
+    const myProduct = cart.value.filter((i) => i.id === item.id)[0]
+    if (myProduct) {
+      myProduct.quantity ++
     } else {
       item.quantity = 1
-  
-      if ( item !== null && 'id' in item && 'quantity' in item) {
-        cart.value.push(item);
+      cart.value.push(item)
+    }
+    setLocalStorageCart()
+  }
 
+
+  function cleanCart(){
+  
+    // Remouv [null, undefined] value :
+    cart.value = cart.value.filter((i) => i !== null && i !== undefined )
+    
+    // Pass a function to map
+    let tableauUnique = [];
+
+    // the doublon case
+    let isDoublonId =  cart.value.map((x) => {
+      if ( tableauUnique.includes(x.id) ) {
+        return true;
       } else {
-          console.log('L\'item ne correspond pas au format attendu { name: string, quantity: number }');
+        tableauUnique.push(x.id);
+        return false;
+      }
+    });
+
+    for ( const i in cart.value ){
+
+      if (isDoublonId[i]){
+        cart.value[cart.value.findIndex(e => e.id === cart.value[i].id)].quantity += cart.value[i].quantity 
+        cart.value[i] = false // case of doublon is false
+        // I can use 'null' value in cart.value but 'findIndex' don't love this
       }
     }
-    localStorage.setItem('cart', JSON.stringify(cart))
+
+    cart.value = cart.value.filter((i) => i !== false)
+
   }
 
-  function removeItem(index) {
-    items.value.splice(index, 1);
+  function subtractItem(item) {
+
+    cleanCart()
+
+    const itemInCart = cart.value.filter(i => i.id === item.id)[0]
+
+    if( itemInCart ) {
+      itemInCart.quantity --
+      if (itemInCart.quantity === 0){
+        cart.value = cart.value.filter((i) => i.quantity !== 0)
+      }
+    } 
   }
   
-  return {Authenticated, cart, isLoading, addItem, initCart}
+
+  return {Authenticated, cart, isLoading, addItem, subtractItem, initCart}
 })

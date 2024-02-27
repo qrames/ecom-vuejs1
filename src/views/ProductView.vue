@@ -4,6 +4,9 @@ import { onMounted, ref, reactive } from 'vue'
 import {useRoute} from 'vue-router'
 import { apiRest } from '/src/rest-api/http-api'
 
+import { useCartStore } from '../stores/cart';
+
+const cartStore = useCartStore()
 
 let product = ref('')
 const get_is_ok = reactive({ data_response: 'loading' })
@@ -37,7 +40,7 @@ onMounted( async () => {
 </script>
 
 <template>
-    <div class="looping-rhombuses-spinner" v-if="get_is_ok.data_response == 'loading'">
+    <div class="looping-rhombuses-spinner" v-if="get_is_ok.data_response === 'loading'">
         <div class="rhombus"></div>
         <div class="rhombus"></div>
         <div class="rhombus"></div>
@@ -66,7 +69,8 @@ onMounted( async () => {
             </div>
             
             <div class="control">
-                <a class="button is-dark">Add to cart</a>
+                <a class="button is-dark" @click="cartStore.addItem(product)">Add to cart</a>
+                <a class="button is-dark" @click="cartStore.subtractItem(product)">-</a>
             </div>
         </div>    
     </div>
