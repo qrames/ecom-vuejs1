@@ -65,6 +65,8 @@ export const useCartStore = defineStore('cart', () => {
     for ( const i in cart.value ){
 
       if (isDoublonId[i]){
+        // The id of first value:
+        // id = cart.value.findIndex(e => e.id === cart.value[i].id)
         cart.value[cart.value.findIndex(e => e.id === cart.value[i].id)].quantity += cart.value[i].quantity 
         cart.value[i] = false // case of doublon is false
         // I can use 'null' value in cart.value but 'findIndex' don't love this
