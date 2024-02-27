@@ -1,3 +1,9 @@
+<script setup>
+const props = defineProps({
+  cartLength: Number
+})
+</script>
+
 <template>
 <div id="wrapper">
     <nav class="navbar is-fixed-top" role="navigation">
@@ -19,8 +25,9 @@
           <div class="buttons">
             <router-link to="/log-in" class="button is-light ">Log in</router-link>
             <router-link to="/cart" class="button is-success">
-            <span class="icon"><i class="fas fa-shopping-cart"></i></span>
-            <span>Cart</span>
+              <span v-if="cartLength != 0">({{cartLength}})</span>
+              <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+              <span>Cart</span>
             </router-link>
           </div>
         </div>

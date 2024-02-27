@@ -13,7 +13,9 @@ export const useCartStore = defineStore('cart', () => {
   // GETTER
 
   const getQuantity = computed(() => (id) => filterIdProduct(id).quantity)
-  const getPrice = computed(() => (id) => calculTotal(id))
+  const getPrice = computed(() => (id) => totalProduct(id))
+  const getTolal = computed(() => totalAll())
+  const getLength = computed(() => cart.value.length)
 
 
   //my local function
@@ -26,8 +28,15 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  function calculTotal(id){
+  function totalProduct(id){
     return filterIdProduct(id).quantity * filterIdProduct(id).price
+  }
+  function totalAll(){
+    let total = 0
+    for(const item of cart.value) {
+      total += totalProduct(item.id)
+    }
+    return total
   }
 
   function setLocalStorageCart(){
@@ -112,5 +121,16 @@ export const useCartStore = defineStore('cart', () => {
   }
   
 
-  return {Authenticated, cart, isLoading, addItem, subtractItem, initCart, getQuantity, getPrice}
+  return {
+    //Authenticated,
+    //cart,
+    //isLoading,
+    addItem,
+    subtractItem,
+    initCart,
+    getQuantity,
+    getPrice,
+    getTolal,
+    getLength,
+  }
 })

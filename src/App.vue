@@ -4,12 +4,13 @@ import TheNavigation from './components/TheNavigation.vue';
 import 'bulma/css/bulma.min.css'
 import { ref, onMounted } from 'vue';
 
-import {initStoreApp} from './store-app'
+import { useCartStore } from './stores/cart';
 
 
 const showMobaleMenu = ref (false)
 
-initStoreApp()
+const cartStore = useCartStore()
+cartStore.initCart()
 
 onMounted( () => {
 
@@ -19,7 +20,7 @@ onMounted( () => {
 </script>
 
 <template>
-  <TheNavigation/>
+  <TheNavigation :cartLength="cartStore.getLength"/>
   <section class="section">
     <router-view v-slot="{ Component, route }">
       <transition :name="route.meta.transition">
