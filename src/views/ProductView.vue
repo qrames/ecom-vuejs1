@@ -61,11 +61,12 @@ onMounted( async () => {
                 <h2 class="subtitle">Information</h2>
 
                 <p><strong>Price: </strong>${{ product.price }}</p>
+                <p v-if="cartStore.getQuantity(product.id)"><strong>Total: </strong>{{ cartStore.getPrice(product.id) }}</p>
             </div>
         </div>
         <div class="field has-addons mt-6">
             <div class="control">
-                <input type="number" class="input" min="1" v-model="quantity">
+                <p class="button is-dark" >{{ cartStore.getQuantity(product.id) }}</p>
             </div>
             
             <div class="control">

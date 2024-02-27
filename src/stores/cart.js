@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 
 export const useCartStore = defineStore('cart', () => {
@@ -10,8 +10,26 @@ export const useCartStore = defineStore('cart', () => {
   function $reset() {
     cart.value = ref([])
   }
+  // GETTER
+
+  const getQuantity = computed(() => (id) => filterIdProduct(id).quantity)
+  const getPrice = computed(() => (id) => calculTotal(id))
+
 
   //my local function
+  function filterIdProduct(id){
+    const myProduct = cart.value.filter((i) => i !== null && i !== undefined ).filter(i => i.id === id)[0]
+    if (myProduct) {
+      return myProduct
+    } else {
+      return {}
+    }
+  }
+
+  function calculTotal(id){
+    return filterIdProduct(id).quantity * filterIdProduct(id).price
+  }
+
   function setLocalStorageCart(){
     cleanCart()
     localStorage.setItem('cart', JSON.stringify(cart))
@@ -94,5 +112,5 @@ export const useCartStore = defineStore('cart', () => {
   }
   
 
-  return {Authenticated, cart, isLoading, addItem, subtractItem, initCart}
+  return {Authenticated, cart, isLoading, addItem, subtractItem, initCart, getQuantity, getPrice}
 })
