@@ -26,7 +26,7 @@ onMounted( async () => {
 
         if (product.value != "") {
             get_is_ok.data_response = true
-        }       
+        }
         else {
             get_is_ok.data_response = false
         }
@@ -88,4 +88,3 @@ onMounted( async () => {
     font-size: 2em;
 }
 </style>
-    I
