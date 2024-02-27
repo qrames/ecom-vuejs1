@@ -13,6 +13,7 @@ export const useCartStore = defineStore('cart', () => {
 
   //my local function
   function setLocalStorageCart(){
+    cleanCart()
     localStorage.setItem('cart', JSON.stringify(cart))
   }
 
@@ -54,7 +55,9 @@ export const useCartStore = defineStore('cart', () => {
     const local = localStorage.getItem('cart')
     if(local) {
       if (JSON.parse(local)._value.length > 0) {
-        cart.value.push(JSON.parse(local)._value[0])
+        for (const item of JSON.parse(local)._value){
+          cart.value.push(item)
+        }
       } else setLocalStorageCart()
     } else setLocalStorageCart()
   }
@@ -86,7 +89,8 @@ export const useCartStore = defineStore('cart', () => {
       if (itemInCart.quantity === 0){
         cart.value = cart.value.filter((i) => i.quantity !== 0)
       }
-    } 
+    }
+    setLocalStorageCart()
   }
   
 
