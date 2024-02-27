@@ -9,8 +9,10 @@ import {initStoreApp} from './store-app'
 
 const showMobaleMenu = ref (false)
 
+initStoreApp()
+
 onMounted( () => {
-  initStoreApp()
+
 })
   
 
