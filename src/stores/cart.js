@@ -54,7 +54,6 @@ export const useCartStore = defineStore('cart', () => {
     const local = localStorage.getItem('cart')
     if(local) {
       if (JSON.parse(local)._value.length > 0) {
-        console.log(JSON.parse(local)._value)
         cart.value.push(JSON.parse(local)._value[0])
       } else setLocalStorageCart()
     } else setLocalStorageCart()
