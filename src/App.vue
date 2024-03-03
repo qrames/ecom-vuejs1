@@ -23,9 +23,7 @@ onMounted( () => {
   <TheNavigation :cartLength="cartStore.getLength"/>
   <section class="section">
     <router-view v-slot="{ Component, route }">
-      <transition :name="route.meta.transition">
-        <component :is="Component" :key="route.path" />
-      </transition>
+      <component :is="Component" :key="route.path" />
     </router-view> 
   </section>
   <footer class="footer">
@@ -35,36 +33,4 @@ onMounted( () => {
 </template>
 
 <style>
-
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-
-.slide-left-enter-active,
-.slide-left-leave-active {
-  transition: opacity 1s, transform 1s ;
-}
-
-.slide-left-enter-from,
-.slide-right-leave-to {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition: opacity 1s, transform 1s ;
-}
-
-.slide-right-enter-from,
-.slide-left-leave-to {
-  transform: translateX(100%);
-  opacity: 0;
-}
 </style>
