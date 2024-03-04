@@ -14,7 +14,7 @@ export const useCartStore = defineStore('cart', () => {
 
   const getQuantity = computed(() => (id) => filterIdProduct(id).quantity)
   const getPrice = computed(() => (id) => totalProduct(id))
-  const getTolal = computed(() => totalAll())
+  const getTotal = computed(() => totalAll())
   const getLength = computed(() => cart.value.length)
 
 
@@ -123,14 +123,14 @@ export const useCartStore = defineStore('cart', () => {
 
   return {
     //Authenticated,
-    //cart,
+    cart,
     //isLoading,
     addItem,
     subtractItem,
     initCart,
     getQuantity,
     getPrice,
-    getTolal,
+    getTotal,
     getLength,
   }
 })
