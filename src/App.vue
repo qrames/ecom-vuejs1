@@ -21,11 +21,11 @@ onMounted( () => {
 
 <template>
   <TheNavigation :cartLength="cartStore.getLength"/>
-  <section class="section">
+  <main>
     <router-view v-slot="{ Component, route }">
       <component :is="Component" :key="route.path" />
     </router-view> 
-  </section>
+  </main>
   <footer class="footer">
     <p class="has-text-contered is-dark">Copyright (c) 2024</p>
   </footer>

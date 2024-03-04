@@ -5,37 +5,26 @@ defineProps({
 </script>
 
 <template>
-<div class="box">
-    <figure class="image mb-4">
-        <img :src="product.get_thumbnail" alt="">
-    </figure>
-    <h3>{{ product.name }}</h3>
-    <p>{{ product.price }}</p>
-    <p>{{ product.description }}</p>
-    <router-link :to="product.get_absolute_url" class="fancy-btn" >
-        detail
-    </router-link>
+<div class="gridy-1 gridyhe-1">
+    <div class="gridimg" :style="'background-image: url(' + product.get_thumbnail + ')'">
+
+    </div>
+    <div class="gridinfo">
+        <h3>{{ product.name }}</h3>
+        <div class="gridmeta">
+            <p class="gridwhen">{{ product.price }}</p>
+
+        </div>
+        <p class="gridexerpt">{{ product.description }}</p>
+        <router-link :to="product.get_absolute_url" class="grid-btn grid-more" >
+            <span>Detail</span>
+            <i class="fa fa-plus"></i>
+        </router-link>
+    </div>
 </div>
+
 </template>
 
 
 <style>
-.main {
-    height: 100%;
-}
-.main div{
-    height: 100%;
-
-}
-
-.fancy-btn {
-  color: #fff;
-  background: linear-gradient(315deg, #42d342 25%, #71ff64);
-  border: none;
-  padding: 5px 10px;
-  margin: 5px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
 </style>

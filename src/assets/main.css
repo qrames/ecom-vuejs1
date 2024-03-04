@@ -1,13 +1,12 @@
 @import './base.css';
 @import './loading.css';
+@import './Masonry.css';
 
 main {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   font-weight: normal;
 }
-
 a,
 .green {
   text-decoration: none;
@@ -28,17 +27,9 @@ article {
 }
 
 @media (min-width: 1024px) {
-  section {
-    display: flex;
-    place-items: center;
-  }
 
   main {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    min-width: 98%;
+
   }
-  article {
-    height: 660px;
-  }  
 }
