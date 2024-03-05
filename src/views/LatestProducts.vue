@@ -37,18 +37,20 @@ async function searchProducts() {
 </script>
 
 <template>
-  <form method="get" action="/latest-products-list/">
-    <div class="field has-addons">
-      <div class="control">
-        <input class="input" type="text" placeholder="search" v-model="query">
+  <div class="container">
+    <form method="get" action="/latest-products-list/">
+      <div class="field has-addons has-addons-centered">
+        <div class="control">
+          <input class="input" type="text" placeholder="search" v-model="query">
+        </div>
+        <div class="control">
+          <a class="button is-primary" @click="searchProducts">
+            <i id="loop" class="fas fa-search"></i>
+          </a>
+        </div>
       </div>
-      <div class="control">
-        <a class="button is-primary" @click="searchProducts">
-          <i id="loop" class="fas fa-search"></i>
-        </a>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
   <div
   class="gridywrap"
   v-for="product in latestProducts"

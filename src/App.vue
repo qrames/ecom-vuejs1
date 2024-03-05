@@ -33,4 +33,7 @@ onMounted( () => {
 </template>
 
 <style>
+.footer {
+  padding: 1em;
+}
 </style>

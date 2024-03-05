@@ -45,7 +45,7 @@ onMounted( async () => {
         <div class="rhombus"></div>
         <div class="rhombus"></div>
     </div>
-    <div class="page-product" v-else-if="get_is_ok.data_response === true">
+    <div class="container page-product" v-else-if="get_is_ok.data_response === true">
         <div class="columns is-multiline">
             <div class="column is-9">
                 <figure class="image mb-6">
