@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-
+import { formatMonetaire } from '@/utils.js'
+import Swal from 'sweetalert2'
 
 export const useCartStore = defineStore('cart', () => {
   const Authenticated = ref(true)
@@ -10,11 +11,11 @@ export const useCartStore = defineStore('cart', () => {
   function $reset() {
     cart.value = ref([])
   }
-  // GETTER
 
+  // GETTER
   const getQuantity = computed(() => (id) => filterIdProduct(id).quantity)
-  const getPrice = computed(() => (id) => totalProduct(id))
-  const getTotal = computed(() => totalAll())
+  const getPrice = computed(() => (id) => formatMonetaire(totalProduct(id)))
+  const getTotal = computed(() => formatMonetaire(totalAll()))
   const getLength = computed(() => cart.value.length)
 
 
@@ -114,7 +115,28 @@ export const useCartStore = defineStore('cart', () => {
     if( itemInCart ) {
       itemInCart.quantity --
       if (itemInCart.quantity === 0){
-        cart.value = cart.value.filter((i) => i.quantity !== 0)
+        Swal.fire({
+          title: "Are you sure?",
+          text: "Remouve your product?",
+          icon: "warning",
+          imageUrl: itemInCart.get_thumbnail,
+          imageHeight: 200,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your cart is clean",
+              icon: "success"
+            })
+          cart.value = cart.value.filter((i) => i.quantity !== 0)
+          } else {
+            itemInCart.quantity = 1
+          }
+        })
       }
     }
     setLocalStorageCart()
