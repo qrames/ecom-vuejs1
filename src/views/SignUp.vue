@@ -1,20 +1,31 @@
 <script setup>
 import { ref } from 'vue'
+import { apiRest } from '@/rest-api/http-api'
 import Swal from 'sweetalert2'
+
+import {isDifferentPass, isValidPassword, isValidEmail} from '@/utils'
 
 const mail = ref('')
 const password = ref('')
 const password2 = ref('')
 
 const isUse = false
-const notValidPass = false
 
-const isDifferentPass =  () => (password.value !== password2.value)
-
+//Default : passwordOption = {'num': 1, 'length': 8, 'special': 1}
+const passwordOption = undefined
 
 
 function submitForm(){
-
+  if (isValidPassword(password.value) && !isDifferentPass(password.value, password2.value) && isValidEmail(mail.value)){
+    apiRest.post('/users/', FormData)
+      .then( response => {
+        Swal.fire({
+          title: "create!",
+          text: "Your acount is create",
+          icon: "success"
+        })
+      })
+  }
 }
 
 </script>
@@ -34,7 +45,9 @@ function submitForm(){
             <label class="label is-large has-text-centered">Mail</label>
 
             <div class="control has-icons-left">
-              <input :class="{ 'is-danger' : isUse }" class="input is-rounded is-large" type="mail" placeholder="wonderful.me@email.ua" v-model="mail">
+              <input :class="{ 'is-danger' : isUse || (!isValidEmail(mail) && mail != '') }" 
+                class="input is-rounded is-large" type="mail" 
+                placeholder="wonderful.me@email.ua" v-model="mail">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
@@ -54,12 +67,12 @@ function submitForm(){
               <span class="icon is-small is-left">
                 <i class="fas fa-lock"></i>
               </span>
-              <span class="icon is-small is-right"  v-if="notValidPass">
+              <span class="icon is-small is-right"  v-if="!isValidPassword(password, passwordOption) && password != ''">
                 <i class="fas fa-exclamation-triangle"></i>
               </span>
             </div>
-            <p class="help" v-if="notValidPass">Pleas make a more secure password</p>
-            <p class="help" v-if="notValidPass">Use special caracters numbers letters / 8 min</p>
+            <p class="help" v-if="!isValidPassword(password, passwordOption)">Pleas make a more secure password</p>
+            <p class="help" v-if="!isValidPassword(password, passwordOption)">Useing specials caracters numbers and letters</p>
           </div>
 
           <div class="field">
@@ -72,7 +85,7 @@ function submitForm(){
                 <i class="fas fa-lock"></i>
               </span>
             </div>
-            <p class="help" v-if="isDifferentPass()">This is different !</p>
+            <p class="help" v-if="isDifferentPass(password, password2)">This is different !</p>
           </div>
 
           <div class="field">
