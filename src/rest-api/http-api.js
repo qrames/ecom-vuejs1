@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { baseURL } from './setting-api'
+import settings from './settings.json'
 
 const apiRest = axios.create({
-    baseURL: baseURL + 'my_ecom',
+    baseURL: settings.baseURL + 'my_ecom',
     headers: {
       //common['Authorization']: 'AUTH_TOKEN',
     },
