@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 
 import {isDifferentPass, isValidPassword, isValidEmail} from '@/utils'
 
-const mail = ref('')
+const email = ref('')
 const password = ref('')
 const password2 = ref('')
 
@@ -16,14 +16,27 @@ const passwordOption = undefined
 
 
 function submitForm(){
-  if (isValidPassword(password.value) && !isDifferentPass(password.value, password2.value) && isValidEmail(mail.value)){
-    apiRest.post('/users/', FormData)
+  if (isValidPassword(password.value) && !isDifferentPass(password.value, password2.value) && isValidEmail(email.value)){
+    const formData = {
+    "email": email.value,
+    "username": email.value,
+    "password": password.value
+}
+    apiRest.post('/auth/users/', formData)
       .then( response => {
         Swal.fire({
           title: "create!",
           text: "Your acount is create",
           icon: "success"
         })
+      })
+      .catch(error => {
+        if (error.response) {
+          console.log('error.response.data :')
+          console.log(error.response.data)
+          console.log('error.response :')
+          console.log(error.response)
+        }
       })
   }
 }
@@ -42,12 +55,12 @@ function submitForm(){
 
           <div class="field">
 
-            <label class="label is-large has-text-centered">Mail</label>
+            <label class="label is-large has-text-centered">Email</label>
 
             <div class="control has-icons-left">
-              <input :class="{ 'is-danger' : isUse || (!isValidEmail(mail) && mail != '') }" 
-                class="input is-rounded is-large" type="mail" 
-                placeholder="wonderful.me@email.ua" v-model="mail">
+              <input :class="{ 'is-danger' : isUse || (!isValidEmail(email) && email != '') }" 
+                class="input is-rounded is-large" type="email" 
+                placeholder="wonderful.me@email.ua" v-model="email">
               <span class="icon is-small is-left">
                 <i class="fas fa-envelope"></i>
               </span>
@@ -55,7 +68,7 @@ function submitForm(){
                 <i class="fas fa-exclamation-triangle"></i>
               </span>
             </div>
-            <p class="help" v-if="isUse">This mail is use</p>
+            <p class="help" v-if="isUse">This email is use</p>
           </div>
 
           <div class="field">
