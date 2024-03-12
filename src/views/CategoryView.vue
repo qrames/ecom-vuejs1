@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import {useRoute} from 'vue-router'
 import ProductBox from '../components/ProductBox.vue';
 
-import { apiRest } from '/src/rest-api/http-api'
+import { apiRest } from '@/rest-api'
 
 let latestProducts = ref('')
 

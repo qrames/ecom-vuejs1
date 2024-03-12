@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { apiRest } from '/src/rest-api/http-api'
+import { apiRest } from '/src/rest-api'
 
 import ProductBox from '../components/ProductBox.vue';
 

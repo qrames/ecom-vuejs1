@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { apiRest } from '@/rest-api/http-api'
+import { apiRest } from '@/rest-api'
 import Swal from 'sweetalert2'
 
 import {isDifferentPass, isValidPassword, isValidEmail} from '@/utils'
@@ -124,4 +124,4 @@ function submitForm(){
 }
 
 </style>
-  
+  @/rest-api

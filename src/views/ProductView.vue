@@ -2,7 +2,7 @@
 
 import { onMounted, ref, reactive } from 'vue'
 import {useRoute} from 'vue-router'
-import { apiRest } from '/src/rest-api/http-api'
+import { apiRest } from '/src/rest-api'
 
 import { useCartStore } from '../stores/cart';
 
