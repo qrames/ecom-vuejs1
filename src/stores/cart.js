@@ -7,6 +7,7 @@ export const useCartStore = defineStore('cart', () => {
   const Authenticated = ref(true)
   const cart = ref([])
   const isLoading = ref(false)
+  const token = ref('')
 
   function $reset() {
     cart.value = ref([])
@@ -81,6 +82,15 @@ export const useCartStore = defineStore('cart', () => {
   //ACTION function 
   function initCart(){
     const local = localStorage.getItem('cart')
+
+    if (localStorage.getItem('token')){
+      token.value = localStorage.getItem('token')
+      Authenticated.value = true
+    } else {
+      token.value = ''
+      Authenticated.value = false
+    }
+
     if(local) {
       if (JSON.parse(local)._value.length > 0) {
         for (const item of JSON.parse(local)._value){
@@ -88,6 +98,17 @@ export const useCartStore = defineStore('cart', () => {
         }
       } else setLocalStorageCart()
     } else setLocalStorageCart()
+  }
+
+  function setToken(new_token){
+
+    if (new_token !== ''){
+      Authenticated.value = true
+    } else {
+      Authenticated.value = false
+    }
+    token.value = new_token
+    localStorage.setItem('token', new_token)
   }
 
   function addItem(item) {
@@ -144,9 +165,10 @@ export const useCartStore = defineStore('cart', () => {
   
 
   return {
-    //Authenticated,
+    Authenticated,
     cart,
     //isLoading,
+    setToken,    
     addItem,
     subtractItem,
     initCart,
