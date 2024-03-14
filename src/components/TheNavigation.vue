@@ -23,7 +23,11 @@ const props = defineProps({
         </div>
         <div class="navbar-item">
           <div class="buttons">
-            <router-link to="/log-in" class="button is-light ">Log in</router-link>
+            <router-link 
+              :to="{ path: '/log-in', query: { to: $route.fullPath } }" 
+              class="button is-light ">
+              Log in
+            </router-link>
             <router-link to="/cart" class="button is-success">
               <span v-if="cartLength != 0">({{cartLength}})</span>
               <span class="icon"><i class="fas fa-shopping-cart"></i></span>

@@ -1,19 +1,26 @@
 <script setup>
 import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { apiRest } from '@/rest-api'
 import Swal from 'sweetalert2'
 
 import { isValidEmail } from '@/utils'
-
 import { useCartStore } from '../stores/cart';
 
 const cartStore = useCartStore()
+const route = useRoute()
+const router = useRouter()
 
 const email = ref('')
 const password = ref('')
-
 const errorlogin = false
 
+const login = () => {
+  // Ici, mettez votre logique de connexion
+  // Une fois que l'utilisateur est connecté, redirigez-le vers la page précédente
+  console.log(apiRest.defaults.headers.common["Authorization"])
+  router.push(route.query.to || '/cart')
+}
 
 function submitForm(){
   if (password.value != null){
@@ -25,8 +32,7 @@ function submitForm(){
       .then( response => {
         const token = response.data.auth_token
 
-        cartStore.setToken(token)        
-        apiRest.defaults.headers.common["Authorization"] = "Token" + token
+        cartStore.setToken(token)
 
         Swal.fire({
           title: "Login succes!",
@@ -42,6 +48,7 @@ function submitForm(){
           console.log(error.response)
         }
       })
+      .finally(login)
   }
 }
 

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { formatMonetaire } from '@/utils.js'
 import Swal from 'sweetalert2'
+import { apiRest } from '@/rest-api'
 
 export const useCartStore = defineStore('cart', () => {
   const Authenticated = ref(true)
@@ -108,6 +109,7 @@ export const useCartStore = defineStore('cart', () => {
       Authenticated.value = false
     }
     token.value = new_token
+    apiRest.defaults.headers.common["Authorization"] = "Token " + new_token
     localStorage.setItem('token', new_token)
   }
 
