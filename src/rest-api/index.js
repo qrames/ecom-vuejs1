@@ -8,7 +8,7 @@ const apiRest = axios.create({
     },
     //headers.common['Authorization'] = AUTH_TOKEN;
     //defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-    timeout: 5000,
+    timeout: settings.timeout,
 })
 
 export { apiRest }
