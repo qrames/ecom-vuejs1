@@ -5,7 +5,6 @@ import Swal from 'sweetalert2'
 import { apiRest } from '@/rest-api'
 
 export const useCartStore = defineStore('cart', () => {
-  const Authenticated = ref(true)
   const cart = ref([])
   const isLoading = ref(false)
   const token = ref('')
@@ -19,7 +18,7 @@ export const useCartStore = defineStore('cart', () => {
   const getPrice = computed(() => (id) => formatMonetaire(totalProduct(id)))
   const getTotal = computed(() => formatMonetaire(totalAll()))
   const getLength = computed(() => cart.value.length)
-
+  const Authenticated = computed(() =>  token.value != ''  && token.value != undefined)
 
   //my local function
   function filterIdProduct(id){
@@ -84,13 +83,7 @@ export const useCartStore = defineStore('cart', () => {
   function initCart(){
     const local = localStorage.getItem('cart')
 
-    if (localStorage.getItem('token')){
-      token.value = localStorage.getItem('token')
-      Authenticated.value = true
-    } else {
-      token.value = ''
-      Authenticated.value = false
-    }
+    token.value = localStorage.getItem('token') || ''
 
     if(local) {
       if (JSON.parse(local)._value.length > 0) {
@@ -102,15 +95,9 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   function setToken(new_token){
-
-    if (new_token !== ''){
-      Authenticated.value = true
-    } else {
-      Authenticated.value = false
-    }
-    token.value = new_token
-    apiRest.defaults.headers.common["Authorization"] = "Token " + new_token
-    localStorage.setItem('token', new_token)
+    apiRest.defaults.headers.common["Authorization"] = new_token != ''  && new_token != undefined ? "Token " + new_token : ''
+    token.value = new_token != undefined ? new_token : ''
+    localStorage.setItem('token', token.value)
   }
 
   function addItem(item) {
