@@ -1,14 +1,8 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-
 import CartLine from '@/components/CartLine.vue'
 import { useCartStore } from '../stores/cart';
 
 const cartStore = useCartStore()
-
-const props = defineProps({
-  cartLength: Number
-})
 
 </script>
 
